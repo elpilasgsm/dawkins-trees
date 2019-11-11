@@ -1,6 +1,10 @@
 package org.sfedu.sockets.model;
 
+import org.springframework.util.CollectionUtils;
+
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -69,5 +73,20 @@ public class TreeHromo implements Serializable {
 
     public TreeGene getWidth() {
         return width;
+    }
+
+    private TreeHromo getParent(TreeHromo treeHromo) {
+        return Math.random() > .5 ? treeHromo : this;
+    }
+
+    public TreeHromo crossover(TreeHromo treeHromo) {
+        return new TreeHromo(
+                getParent(treeHromo).getLength().getValue(),
+                getParent(treeHromo).getMinLength().getValue(),
+                getParent(treeHromo).getLengthFactor().getValue(),
+                getParent(treeHromo).getWidthFactor().getValue(),
+                getParent(treeHromo).getWidth().getValue(),
+                getParent(treeHromo).getAngleFactor().getValue(),
+                getParent(treeHromo).getMaxLevel().getValue());
     }
 }

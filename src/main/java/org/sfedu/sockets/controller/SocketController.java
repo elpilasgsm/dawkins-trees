@@ -10,10 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.util.CollectionUtils;
+import org.springframework.web.bind.annotation.*;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -21,9 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.IntStream;
 
 /**
@@ -50,12 +46,30 @@ public class SocketController {
                       @PathVariable("param-7") Integer maxLevel
     ) throws IOException {
 
-        response.setContentType("image/jpeg");
+        response.setContentType("image/png");
         BufferedImage bi = DrawTree.paint((int) (4 * GeneTypes.LENGTH.getMax()), width, length, minLength, lenthFactor, widthFactor, angleDelta, maxLevel);
         OutputStream out = response.getOutputStream();
-        ImageIO.write(bi, "jpg", out);
+        ImageIO.write(bi, "png", out);
         out.close();
     }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/image/cross", method = RequestMethod.POST)
+    public List<TreeHromo> crossover(HttpServletRequest request, HttpServletResponse response,
+                                     @RequestBody List<TreeHromo> parents
+    ) throws IOException {
+
+
+        if (parents == null || CollectionUtils.isEmpty(parents) || parents.size() < 2) {
+            return new ArrayList<>();
+        }
+        TreeHromo p1 = parents.get(0);
+        TreeHromo p2 = parents.get(1);
+
+        return Collections.singletonList(p1.crossover(p2));
+    }
+
 
     @ResponseBody
     @RequestMapping(value = "/image/children/{param-1}/{param-2}/{param-3}/{param-4}/{param-5}/{param-6}/{param-7}")

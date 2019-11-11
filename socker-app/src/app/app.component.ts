@@ -12,7 +12,7 @@ import {Tree} from "./tree";
   providers: [TreesService]
 })
 export class AppComponent {
-  title = 'socker-app';
+  title = 'Evolution';
   targetWord = 'TEST ME';
   populationSize = 1000;
   iterations = 500;
@@ -28,7 +28,7 @@ export class AppComponent {
   }
 
   getTrees() {
-    this.treeService.get("/image?number=" + this.numberOfTrees).subscribe(value => {
+    this.treeService.getRandom(this.numberOfTrees).subscribe(value => {
         this.trees = value;
       },
       error => {
@@ -36,8 +36,30 @@ export class AppComponent {
       });
   }
 
+  crossover() {
+    this.treeService.crossover(this.trees.filter(
+      tree => tree.selected)).subscribe(value => {
+        this.trees = this.trees.concat(value);
+        this.trees.forEach(it => it.selected = false);
+      },
+      error => {
+        // error - объект ошибки
+      });
+  }
+
+  delete(tree) {
+    this.trees.splice(this.trees.indexOf(tree), 1);
+  }
+
   getChildren(tree) {
-    this.treeService.get("/image/children/" + tree.length.value.toFixed(2) + "/" + tree.minLength.value.toFixed(2) + "/" + tree.lengthFactor.value.toFixed(2) + "/" + tree.widthFactor.value.toFixed(2) + "/" + tree.angleFactor.value.toFixed(2) + "/" + tree.width.value.toFixed(2) + "/" + tree.maxLevel.value.toFixed(0)).subscribe(value => {
+    this.treeService.getChildren(
+      tree.length.value.toFixed(2),
+      tree.minLength.value.toFixed(2),
+      tree.lengthFactor.value.toFixed(2),
+      tree.widthFactor.value.toFixed(2),
+      tree.angleFactor.value.toFixed(2),
+      tree.width.value.toFixed(2),
+      tree.maxLevel.value.toFixed(0)).subscribe(value => {
         this.trees = value;
       },
       error => {

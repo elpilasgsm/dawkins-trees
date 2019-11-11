@@ -1,15 +1,9 @@
-.bordered {
-  border: #000000 solid 1px;
+.invert {
+  -webkit-filter: invert(1);
+  filter: invert(1);
 }
 
-input {
-  margin: 3px 3px 3px;
+.rounded{
+  border-radius: 10px;
 }
 
-button {
-  margin: 3px 3px 3px;
-}
-
-div.image{
-  float: left;
-}

@@ -2,7 +2,7 @@
 <div class="container">
   <div class="card-panel teal lighten-2">
     <h1 class="white-text ">
-      Evolution
+      {{title}}
     </h1>
   </div>
   <div class="row">
@@ -14,18 +14,22 @@
               <input id="treesNumI" [(ngModel)]="numberOfTrees" type="text"/></label>
           </div>
           <a class="waves-effect waves-light btn" (click)="getTrees()">Generate Random Population</a>
+          &nbsp;
+          <a class="waves-effect waves-light btn" (click)="crossover()">Crossover</a>
         </div>
-        <div class="card-panel">
-          <div *ngFor="let tree of trees">
-            <div class="col sm12 l3 m6 row light-blue" [ngClass]="{'light-blue': tree.selected}">
+        <div class="card-panel boundary">
+          <div *ngFor="let tree of trees" class="m12">
+            <div class="col sm12 l3 m6 row ">
               <div class="col sm8 l8 m8">
-                <div class="card-image">
-                  <img width="100%" height="100%" (click)="select(tree)"
+                <div class="card-image rounded ">
+                  <img width="100%" height="100%" (click)="select(tree)" class="z-depth-5"
+                       [ngClass]="{'teal darken-2 invert ': tree.selected}"
                        src="/image/{{tree.length.value.toFixed(2)}}/{{tree.minLength.value.toFixed(2)}}/{{tree.lengthFactor.value.toFixed(2)}}/{{tree.widthFactor.value.toFixed(2)}}/{{tree.angleFactor.value.toFixed(2)}}/{{tree.width.value.toFixed(2)}}/{{tree.maxLevel.value.toFixed(0)}}"/>
                 </div>
-                s
                 <div>
-                  <a class="waves-effect waves-light  btn-small" (click)="getChildren(tree)">Parent</a>
+                  <a class="waves-effect waves-light  btn-small" (click)="getChildren(tree)">Mutate</a>
+                  &nbsp;
+                  <a class="waves-effect waves-light  btn-small" (click)="delete(tree)">Delete</a>
                 </div>
               </div>
               <div class="col sm4 l4 m4">

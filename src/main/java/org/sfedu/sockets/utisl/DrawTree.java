@@ -21,16 +21,17 @@ public class DrawTree {
                                       double angleDelta,
                                       int maxLevel) {
         BufferedImage image = new BufferedImage(w, w,
-                BufferedImage.TYPE_INT_RGB);
+                BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = image.createGraphics();
-        g.setColor(Color.WHITE);
+        g.setComposite(AlphaComposite.Clear);
         g.fillRect(0, 0, w, w);
+        g.setComposite(AlphaComposite.Src);
         g.setRenderingHint(
                 RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
         Point2D start = new Point2D.Double(
                 w * 0.5,
-                w * 0.8);
+                w * 0.7);
         g.setColor(Color.BLACK);
         drawTree(g, start, l, minL, width, 0, lengthFactor, widthFactor, angleDelta, maxLevel, 0);
         return image;
