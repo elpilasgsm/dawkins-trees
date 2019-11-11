@@ -9,7 +9,7 @@ public enum GeneTypes {
     MIN_LENGTH(10.0, 0.0, 0.05),
     LENGTH_FACTOR(1.0, 0.0, 0.05),
     WIDTH(23.0, 1.0, 0.5),
-    WIDTH_FACTOR(1.0, .01, 0.05),
+    WIDTH_FACTOR(1.0, .7, 0.005),
     ANGLE_FACTOR(Math.PI, -Math.PI, Math.PI / 90.0),
     MAX_LEVEL(15.0, 0.0, 1.0);
 
